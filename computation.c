@@ -1,6 +1,4 @@
-#include <stdlib.h>
-
-typedef double precision; // used so that the precision for the program can be quickly changed from double to float
+#include "computation.h"
 
 
 precision next_iteration(precision r, precision x_old) {
