@@ -15,7 +15,20 @@ void fill_thread_info(perThreadInfo *info, _Atomic unsigned int x, precision **d
 }
 
 int main(void) {
-    int x;
+    const char image_name[] = "test_image.png";
+
+    int width = 255;
+    int height = 255;
+
+    uint8_t **image_data = (uint8_t**) malloc(sizeof(uint8_t*) * height);
+    for(int i = 0; i < height; i++) {
+        image_data[i] = malloc(sizeof(uint8_t) * width);
+        for(int j = 0; j < width; j++) {
+            image_data[i][j] = (uint8_t) (255 - j);
+        }
+    }
+
+    write_grayscale_8bit_png(image_name, width, height, image_data);
 
 
     return 0;
