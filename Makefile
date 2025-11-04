@@ -1,12 +1,15 @@
 CC = gcc
+CFLAGS = -lpng -lz -O1
 
 all: main
 
-main: main.c computation.o
-	gcc -o main computation.o main.c
+main: main.c computation.o image_processing.o
+	$(CC) -o main computation.o image_processing.o main.c $(CFLAGS)
 
+image_processing.o: image_processing.c
+	$(CC) -c image_processing.c $(CFLAGS)
 computation.o:
-	gcc -c computation.c
+	$(CC) -c computation.c $(CFLAGS)
 
 clean:
-	rm -rf computation.o main
+	rm -rf computation.o image_processing.o main
