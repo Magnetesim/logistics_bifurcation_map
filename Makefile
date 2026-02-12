@@ -8,7 +8,7 @@ main: main.c computation.o image_processing.o
 
 image_processing.o: image_processing.c
 	$(CC) -c image_processing.c $(CFLAGS)
-computation.o:
+computation.o: computation.c
 	$(CC) -c computation.c $(CFLAGS)
 
 clean:

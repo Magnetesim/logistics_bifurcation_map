@@ -15,17 +15,23 @@ void fill_thread_info(perThreadInfo *info, _Atomic unsigned int x, precision **d
 }
 
 int main(void) {
-    const char image_name[] = "test_image.png";
+    const char image_name[] = "bifurcation_map.png";
+    int width = 1024;
+    int height = 1024;
 
-    int width = 255;
-    int height = 255;
+    precision max_r = 4.0;
 
     uint8_t **image_data = (uint8_t**) malloc(sizeof(uint8_t*) * height);
-    for(int i = 0; i < height; i++) {
-        image_data[i] = malloc(sizeof(uint8_t) * width);
-        for(int j = 0; j < width; j++) {
-            image_data[i][j] = (uint8_t) (255 - j);
-        }
+    for(unsigned int i = 0; i < height; i++) {
+        image_data[i] = calloc(sizeof(uint8_t), width);
+        // calloc necessary here since sideways_sum_array assumes pixels are set to 0
+    }
+
+    for(unsigned int i = 0; i < height; i++) {
+        precision* temp_data_array = malloc(sizeof(precision) * 100);
+        precision r_value = max_r * ((precision) i) / ((precision) height);
+        fill_array(temp_data_array, 5000, 100, r_value, 0.5);
+        sideways_sum_array(temp_data_array, image_data[i], 100, height);
     }
 
     write_grayscale_8bit_png(image_name, width, height, image_data);
